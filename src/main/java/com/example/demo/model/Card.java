@@ -1,11 +1,14 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
+@JsonIgnoreProperties(value={"hibernateLazyInitializer"})
 public class Card {
 
     @Id
@@ -14,7 +17,8 @@ public class Card {
 
     private String title;
 
-    private String context;
+    private String content;
+
 
     public Long getId() {
         return id;
@@ -32,11 +36,11 @@ public class Card {
         this.title = title;
     }
 
-    public String getContext() {
-        return context;
+    public String getContent() {
+        return content;
     }
 
-    public void setContext(String context) {
-        this.context = context;
+    public void setContent(String content) {
+        this.content = content;
     }
 }

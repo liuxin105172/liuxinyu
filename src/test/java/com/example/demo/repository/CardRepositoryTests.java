@@ -24,14 +24,14 @@ public class CardRepositoryTests {
     public void testASaveCard() {
         befCard = new Card();
         befCard.setTitle("myTitle1");
-        befCard.setContext("myContext1");
+        befCard.setContent("myContext1");
         cardRepository.save(befCard);
 
         befCard2 = new Card();
         befCard2.setTitle("myTitle2");
-        befCard2.setContext("myContext2");
+        befCard2.setContent("myContext2");
         cardRepository.save(befCard2);
-        Assert.assertEquals("myContext1", cardRepository.findByTitle("myTitle1").getContext());
+        Assert.assertEquals("myContext1", cardRepository.findByTitle("myTitle1").getContent());
     }
 
     @Test
@@ -51,9 +51,9 @@ public class CardRepositoryTests {
     @Test
     public void testDUpdateCard() {
         befCard2.setTitle("myTitle1");
-        befCard2.setContext("myNewContext");
+        befCard2.setContent("myNewContext");
         Card renCard = cardRepository.save(befCard2);
-        Assert.assertEquals(befCard2.getContext(), renCard.getContext());
+        Assert.assertEquals(befCard2.getContent(), renCard.getContent());
     }
 
     @Test

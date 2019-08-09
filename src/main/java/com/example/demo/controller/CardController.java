@@ -1,10 +1,14 @@
 package com.example.demo.controller;
 
+import com.example.demo.exception.CardNotFoundException;
 import com.example.demo.model.Card;
 import com.example.demo.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @RestController
@@ -30,7 +34,11 @@ public class CardController {
      */
     @GetMapping("/getcardbyid/{cardId}")
     public  Card getCardById(@PathVariable("cardId") Long cardId){
-        return cardService.findCardById(cardId);
+        try{
+            return cardService.findCardById(cardId);
+        }catch (CardNotFoundException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"not found！！",e);
+        }
     }
 
     /**
@@ -39,8 +47,9 @@ public class CardController {
      * @return
      */
     @PostMapping("/addcard")
-    public Card addCard(@RequestBody Card card){
-        return cardService.saveCard(card);
+    public List<Card> addCard(@RequestBody Card card){
+        cardService.saveCard(card);
+        return cardService.findAllCard();
     }
 
     /**
@@ -49,8 +58,9 @@ public class CardController {
      * @return
      */
     @PutMapping("/updatecard")
-    public Card updateCard(@RequestBody Card card){
-        return cardService.updateCard(card);
+    public List<Card> updateCard(@RequestBody Card card){
+        cardService.updateCard(card);
+        return cardService.findAllCard();
     }
 
     /**
@@ -58,7 +68,20 @@ public class CardController {
      * @param cardId
      */
     @DeleteMapping("/deletecard/{cardId}")
-    public void deleteCard(@PathVariable("cardId") Long cardId){
+    public List<Card> deleteCard(@PathVariable("cardId") Long cardId){
+
         cardService.deleteCardById(cardId);
+        return cardService.findAllCard();
+
+    }
+
+    @GetMapping("/notfound")
+    public String notfoundException(){
+        throw new EntityNotFoundException();
+    }
+
+    @GetMapping("/run")
+    public String runException(){
+        throw new RuntimeException();
     }
 }

@@ -40,17 +40,17 @@ public class CardControllerTests {
     @Autowired
     private CardService cardService;
 
-    private Card card1,card2,retcard1,retcard2,updcard;
+    private Card card1,retcard1;
 
     @Test
     @Transactional
     public void addCard()throws Exception{
         card1 = new Card();
         card1.setTitle("myTitle1");
-        card1.setContext("myContext1");
+        card1.setContent("myContext1");
         JSONObject object = new JSONObject();
         object.put("title",card1.getTitle());
-        object.put("context",card1.getContext());
+        object.put("context",card1.getContent());
 
         MvcResult result = mvc.perform(post("/api/addcard")
                 .content(object.toJSONString().getBytes())
@@ -95,10 +95,10 @@ public class CardControllerTests {
     public void given1Card_when_findCardById_thenReturnCard() throws Exception{
         card1 = new Card();
         card1.setTitle("myTitle1");
-        card1.setContext("myContext1");
+        card1.setContent("myContext1");
         JSONObject object = new JSONObject();
         object.put("title",card1.getTitle());
-        object.put("context",card1.getContext());
+        object.put("context",card1.getContent());
 
         MvcResult result = mvc.perform(post("/api/addcard")
                 .content(object.toJSONString().getBytes())
@@ -130,10 +130,10 @@ public class CardControllerTests {
     public void given1Card_when_updateCard_thenReturn1Card()throws Exception{
         card1 = new Card();
         card1.setTitle("myTitle1");
-        card1.setContext("myContext1");
+        card1.setContent("myContext1");
         JSONObject object = new JSONObject();
         object.put("title",card1.getTitle());
-        object.put("context",card1.getContext());
+        object.put("context",card1.getContent());
 
         MvcResult result = mvc.perform(post("/api/addcard")
                 .content(object.toJSONString())
@@ -146,7 +146,7 @@ public class CardControllerTests {
         retcard1 = new Card();
         retcard1.setId(jsonObject.getLong("id"));
         retcard1.setTitle("myNewTitle");
-        retcard1.setContext("myNewContext");
+        retcard1.setContent("myNewContext");
         MvcResult mvcResult = mvc.perform(put("/api/updatecard/").
                 content(JSONObject.toJSONString(retcard1)).
                 contentType(MediaType.APPLICATION_JSON)).
@@ -166,10 +166,10 @@ public class CardControllerTests {
     public void given1CardId_when_deleteCard_thenNoReturn()throws Exception{
         card1 = new Card();
         card1.setTitle("myTitle1");
-        card1.setContext("myContext1");
+        card1.setContent("myContext1");
         JSONObject object = new JSONObject();
         object.put("title",card1.getTitle());
-        object.put("context",card1.getContext());
+        object.put("context",card1.getContent());
 
         MvcResult result = mvc.perform(post("/api/addcard")
                 .content(object.toJSONString())
